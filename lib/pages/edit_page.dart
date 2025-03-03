@@ -33,16 +33,24 @@ class _EditPageState extends State<EditPage> {
   }
 
   Future<void> createNote() async {
-    final title = titleController.text.isNotEmpty ? titleController.text : 'No Title';
-    final content = contentController.text.isNotEmpty ? contentController.text : 'No Content';
+    final title =
+        titleController.text.isNotEmpty ? titleController.text : 'No Title';
+    final content =
+        contentController.text.isNotEmpty
+            ? contentController.text
+            : 'No Content';
 
     // Add the note to the database
     await context.read<NoteDatabase>().addNote(title, content);
   }
 
   Future<void> updateNote() async {
-    final title = titleController.text.isNotEmpty ? titleController.text : 'No Title';
-    final content = contentController.text.isNotEmpty ? contentController.text : 'No Content';
+    final title =
+        titleController.text.isNotEmpty ? titleController.text : 'No Title';
+    final content =
+        contentController.text.isNotEmpty
+            ? contentController.text
+            : 'No Content';
     final id = widget.note!.id;
 
     // Update the note in the database
@@ -98,7 +106,8 @@ class _EditPageState extends State<EditPage> {
     return FloatingActionButton(
       onPressed: () async {
         if (widget.note == null) {
-          if (titleController.text.isNotEmpty || contentController.text.isNotEmpty) {
+          if (titleController.text.isNotEmpty ||
+              contentController.text.isNotEmpty) {
             await createNote();
           }
         } else if (titleController.text != widget.note!.title ||
@@ -107,6 +116,7 @@ class _EditPageState extends State<EditPage> {
         }
 
         _clearTextControllers();
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
       },
       child: Icon(HugeIcons.strokeRoundedTick02),
@@ -129,10 +139,7 @@ class _EditPageState extends State<EditPage> {
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: 'Title',
-        hintStyle: TextStyle(
-          color: Colors.grey,
-          fontSize: 30,
-        ),
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 30),
       ),
     );
   }
@@ -143,19 +150,14 @@ class _EditPageState extends State<EditPage> {
       children: [
         Text(
           widget.note != null
-              ? DateFormat('d MMM HH:mm').format(widget.note!.updatedAt ?? DateTime.now())
+              ? DateFormat(
+                'd MMM HH:mm',
+              ).format(widget.note!.updatedAt ?? DateTime.now())
               : DateFormat('d MMM HH:mm').format(DateTime.now()),
           style: TextStyle(color: Colors.grey),
         ),
-        VerticalDivider(
-          color: Colors.grey,
-          thickness: 1,
-          width: 25,
-        ),
-        Text(
-          '$contentLength characters',
-          style: TextStyle(color: Colors.grey),
-        ),
+        VerticalDivider(color: Colors.grey, thickness: 1, width: 25),
+        Text('$contentLength characters', style: TextStyle(color: Colors.grey)),
       ],
     );
   }
@@ -166,9 +168,7 @@ class _EditPageState extends State<EditPage> {
       maxLines: null,
       keyboardType: TextInputType.multiline,
       controller: contentController,
-      style: TextStyle(
-        color: Theme.of(context).colorScheme.inversePrimary,
-      ),
+      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: 'Type something here...',

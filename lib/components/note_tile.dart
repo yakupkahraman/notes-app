@@ -65,16 +65,16 @@ class _NoteTileState extends State<NoteTile> {
 
   void _handleUpdate(DismissUpdateDetails details) {
     setState(() {
-      if (details.progress > 0.35) {
+      if (details.progress > 0.4) {
         _backgroundColor = Colors.red;
         if (!_hasVibrated) {
           Vibration.vibrate(duration: 100);
           _hasVibrated = true;
         }
       } else {
-        _backgroundColor = Theme.of(context).colorScheme.secondary; // Change to grey
+        _backgroundColor = Theme.of(context).colorScheme.secondary;
         if (_hasVibrated) {
-          Vibration.vibrate(duration: 100); // Vibrate again when changing to grey
+          Vibration.vibrate(duration: 100);
           _hasVibrated = false;
         }
       }
@@ -82,11 +82,12 @@ class _NoteTileState extends State<NoteTile> {
   }
 
   void _handleDismissed(BuildContext context, DateTime updatedAtDate) {
-    final deletedNote = Note()
-      ..id = widget.id
-      ..title = widget.title
-      ..content = widget.content
-      ..updatedAt = updatedAtDate;
+    final deletedNote =
+        Note()
+          ..id = widget.id
+          ..title = widget.title
+          ..content = widget.content
+          ..updatedAt = updatedAtDate;
 
     widget.onSlidableTap();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -106,9 +107,7 @@ class _NoteTileState extends State<NoteTile> {
         ),
         duration: const Duration(seconds: 5),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: const EdgeInsets.all(10),
       ),
     );
@@ -119,10 +118,7 @@ class _NoteTileState extends State<NoteTile> {
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       color: _backgroundColor,
-      child: const Icon(
-        HugeIcons.strokeRoundedDelete02,
-        color: Colors.white,
-      ),
+      child: const Icon(HugeIcons.strokeRoundedDelete02, color: Colors.white),
     );
   }
 
@@ -153,10 +149,7 @@ class _NoteTileState extends State<NoteTile> {
             ),
             Text(
               formattedDate,
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontSize: 12,
-              ),
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
             ),
           ],
         ),
