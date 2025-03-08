@@ -19,6 +19,7 @@ class _EditPageState extends State<EditPage> {
   TextEditingController contentController = TextEditingController();
   FocusNode contentFocusNode = FocusNode();
   int contentLength = 0;
+  int wordCount = 0;
 
   @override
   void initState() {
@@ -29,7 +30,15 @@ class _EditPageState extends State<EditPage> {
       titleController.text = widget.note!.title;
       contentController.text = widget.note!.content;
       contentLength = contentController.text.length;
+      wordCount = _calculateWordCount(contentController.text);
     }
+  }
+
+  int _calculateWordCount(String text) {
+    if (text.isEmpty) {
+      return 0;
+    }
+    return text.trim().split(RegExp(r'\s+')).length;
   }
 
   Future<void> createNote() async {
@@ -158,6 +167,8 @@ class _EditPageState extends State<EditPage> {
         ),
         VerticalDivider(color: Colors.grey, thickness: 1, width: 25),
         Text('$contentLength characters', style: TextStyle(color: Colors.grey)),
+        VerticalDivider(color: Colors.grey, thickness: 1, width: 25),
+        Text('$wordCount words', style: TextStyle(color: Colors.grey)),
       ],
     );
   }
@@ -177,6 +188,7 @@ class _EditPageState extends State<EditPage> {
       onChanged: (text) {
         setState(() {
           contentLength = text.length;
+          wordCount = _calculateWordCount(text);
         });
       },
     );
